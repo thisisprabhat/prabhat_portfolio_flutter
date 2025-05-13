@@ -1,33 +1,12 @@
 import 'dart:async';
-
-import 'package:colored_log/colored_log.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:toastification/toastification.dart';
+import 'package:toastification/toastification.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:device_info_plus/device_info_plus.dart';
 
-// Future<String> getDeviceId() async {
-//   final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-//   String deviceId = '';
-
-//   if (Platform.isAndroid) {
-//     final AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
-//     deviceId = androidInfo.id;
-//   } else if (Platform.isIOS) {
-//     final IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
-//     deviceId = iosInfo.identifierForVendor ?? '';
-//   } else {
-//     final info = await deviceInfoPlugin.deviceInfo;
-//     deviceId = info.data['product']?.toString() ?? '';
-//   }
-//   ColoredLog.white(deviceId, name: 'DeviceId');
-
-//   return deviceId;
-// }
+import '/library/core.dart';
 
 SizedBox sizedBoxHeight(double height) {
   return SizedBox(height: height);
@@ -74,86 +53,56 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackBar(
   );
 }
 
-// flutterToast(
-//   var message, {
-//   String? description,
-//   int? time,
-//   bool error = false,
-//   bool warning = false,
-//   bool success = false,
-//   Function(ToastificationItem)? onTap,
-//   Alignment? alignment,
-// }) {
-//   if (message is AppException) {
-//     description ??= message.toString();
-//     message = message.title;
-//     error = true;
-//   }
-
-//   final color =
-//       error
-//           ? Colors.red
-//           : success
-//           ? Colors.green
-//           : warning
-//           ? Colors.yellow.shade700
-//           : Colors.blue;
-
-//   toastification.show(
-//     title: Text(message?.toString() ?? '', style: TextStyle(color: color)),
-//     // closeButtonShowType: CloseButtonShowType.always,
-//     autoCloseDuration: Duration(seconds: time ?? 4),
-//     style: ToastificationStyle.flat,
-//     alignment: alignment ?? Alignment.bottomRight,
-//     callbacks:
-//         onTap == null
-//             ? const ToastificationCallbacks()
-//             : ToastificationCallbacks(onTap: onTap),
-//     primaryColor: color,
-//     borderSide: const BorderSide(color: Colors.grey, width: 0.4),
-//     description:
-//         description == null
-//             ? null
-//             : Text(description, style: TextStyle(color: color)),
-//     progressBarTheme: ProgressIndicatorThemeData(color: color),
-//     type:
-//         error
-//             ? ToastificationType.error
-//             : success
-//             ? ToastificationType.success
-//             : warning
-//             ? ToastificationType.warning
-//             : ToastificationType.info,
-//   );
-// }
-
-showToast(
+flutterToast(
   var message, {
   String? description,
   int? time,
   bool error = false,
   bool warning = false,
   bool success = false,
+  Function(ToastificationItem)? onTap,
+  Alignment? alignment,
 }) {
-  return Fluttertoast.showToast(
-    timeInSecForIosWeb: time ?? 3,
-    msg: message.toString(),
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.BOTTOM,
-    backgroundColor:
+  if (message is AppException) {
+    description ??= message.toString();
+    message = message.title;
+    error = true;
+  }
+
+  final color =
+      error
+          ? Colors.red
+          : success
+          ? Colors.green
+          : warning
+          ? Colors.yellow.shade700
+          : Colors.blue;
+
+  toastification.show(
+    title: Text(message?.toString() ?? '', style: TextStyle(color: color)),
+    // closeButtonShowType: CloseButtonShowType.always,
+    autoCloseDuration: Duration(seconds: time ?? 4),
+    style: ToastificationStyle.flat,
+    alignment: alignment ?? Alignment.bottomRight,
+    callbacks:
+        onTap == null
+            ? const ToastificationCallbacks()
+            : ToastificationCallbacks(onTap: onTap),
+    primaryColor: color,
+    borderSide: const BorderSide(color: Colors.grey, width: 0.4),
+    description:
+        description == null
+            ? null
+            : Text(description, style: TextStyle(color: color)),
+    progressBarTheme: ProgressIndicatorThemeData(color: color),
+    type:
         error
-            ? Colors.red
-            : warning
-            ? Colors.yellow.shade600
+            ? ToastificationType.error
             : success
-            ? Colors.green
-            : Colors.grey.shade700,
-    webBgColor:
-        success
-            ? "linear-gradient(to right, #0f6a11, #0fcc13)"
-            : error
-            ? "linear-gradient(to right, #7a0c0c, #c21c1c)"
-            : "linear-gradient(to right, #091319, #164049)",
+            ? ToastificationType.success
+            : warning
+            ? ToastificationType.warning
+            : ToastificationType.info,
   );
 }
 

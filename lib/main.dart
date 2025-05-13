@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '/features/settings/controllers/theme/theme_controller.dart';
 
+import 'features/settings/controllers/locale/locale_controller.dart';
 import 'library/core.dart';
 
 void main() async {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
             theme: AppColor.light.theme,
             darkTheme: AppColor.dark.theme,
             themeMode: ref.watch(themeControllerProvider),
-            locale: const Locale('en'),
+            locale: ref.watch(localeControllerProvider),
           ),
         );
       },
